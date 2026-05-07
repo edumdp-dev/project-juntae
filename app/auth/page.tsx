@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { WizardStepper } from '@/components/ui/wizard-stepper'
 import { Toast } from '@/components/ui/toast'
@@ -12,6 +12,13 @@ const cadastroSteps = [
   { label: 'Dados' },
   { label: 'Verificação' },
   { label: 'PIX' },
+]
+
+const pixOptions = [
+  { type: 'CPF', icon: 'badge' },
+  { type: 'Telefone', icon: 'smartphone' },
+  { type: 'E-mail', icon: 'email' },
+  { type: 'Chave Aleatória', icon: 'key' },
 ]
 
 export default function AuthPage() {
@@ -33,6 +40,16 @@ export default function AuthPage() {
     setToastMessage(msg)
     setToastVisible(true)
   }
+
+  useEffect(() => {
+    if (tipoPix === 'CPF') {
+      setChavePix(cpf)
+    } else if (tipoPix === 'Telefone') {
+      setChavePix(phone)
+    } else {
+      setChavePix('')
+    }
+  }, [tipoPix, cpf, phone])
 
   const formatCpf = (v: string) => {
     const digits = v.replace(/\D/g, '').slice(0, 11)
@@ -87,22 +104,19 @@ export default function AuthPage() {
 
   const canAdvanceDados = nome.length >= 3 && cpf.replace(/\D/g, '').length === 11
 
-  const tiposPix = ['CPF', 'Telefone', 'E-mail', 'Chave Aleatória']
-
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-gutter bg-background">
-      <div className="w-full max-w-sm flex flex-col items-center gap-8">
+      <div className="w-full max-w-sm flex flex-col items-center gap-6">
         <div className="flex flex-col items-center gap-4">
           <img src="/shield.png" alt="JUNTAE" className="w-20 h-20" />
           <div className="text-center">
             <h1 className="font-h1 text-h1 text-on-surface">JUNTAE</h1>
             <p className="font-body-sm text-on-surface-variant mt-2">
-              Custódia institucional para grupos financeiros
+              Custódia para grupos financeiros
             </p>
           </div>
         </div>
 
-        {/* Toggle Login / Cadastro */}
         <div className="grid grid-cols-2 gap-unit bg-surface-container-low p-1 rounded-2xl border border-outline-variant w-full">
           <button
             className={`font-label-caps text-label-caps py-3 rounded-xl transition-all ${
@@ -139,7 +153,7 @@ export default function AuthPage() {
                     placeholder="(11) 99999-9999"
                     value={phone}
                     onChange={(e) => setPhone(formatPhone(e.target.value))}
-                    className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md text-center tracking-wider"
+                    className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md text-center tracking-wider h-14"
                   />
                 </div>
 
@@ -154,15 +168,13 @@ export default function AuthPage() {
 
                 <div className="relative flex items-center justify-center py-2">
                   <div className="flex-grow h-px bg-outline-variant" />
-                  <span className="px-4 font-label-caps text-label-caps text-on-surface-variant">
-                    ou
-                  </span>
+                  <span className="px-4 font-label-caps text-label-caps text-on-surface-variant">ou</span>
                   <div className="flex-grow h-px bg-outline-variant" />
                 </div>
 
                 <button
                   type="button"
-                  className="w-full border border-outline-variant text-on-surface-variant font-label-caps text-label-caps py-4 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center justify-center gap-3"
+                  className="w-full border border-outline-variant text-on-surface-variant font-label-caps text-label-caps py-4 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center justify-center gap-3 h-14"
                 >
                   <span className="material-symbols-outlined">fingerprint</span>
                   ENTRAR COM BIOMETRIA
@@ -171,7 +183,7 @@ export default function AuthPage() {
             )}
 
             {step === 'otp' && (
-              <div className="w-full space-y-6">
+              <div className="w-full space-y-6 min-h-[280px]">
                 <div className="text-center space-y-2">
                   <p className="font-body-sm text-on-surface-variant">
                     Código enviado para
@@ -232,7 +244,7 @@ export default function AuthPage() {
             } />
 
             {step === 'dados' && (
-              <div className="w-full space-y-6 animate-fade-in-up">
+              <div className="w-full space-y-6 animate-fade-in-up min-h-[280px]">
                 <div className="space-y-2">
                   <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
                     Nome Completo
@@ -241,8 +253,8 @@ export default function AuthPage() {
                     type="text"
                     placeholder="Seu nome completo"
                     value={nome}
-                    onChange={(e) => setNome(e.target.value)}
-                    className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md"
+                    onChange={(e) => setNome(e.target.value.replace(/[0-9]/g, ''))}
+                    className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md h-14"
                     autoFocus
                   />
                 </div>
@@ -256,7 +268,7 @@ export default function AuthPage() {
                     placeholder="000.000.000-00"
                     value={cpf}
                     onChange={(e) => setCpf(formatCpf(e.target.value))}
-                    className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md text-center tracking-wider"
+                    className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md text-center tracking-wider h-14"
                   />
                 </div>
 
@@ -264,7 +276,7 @@ export default function AuthPage() {
                   type="button"
                   disabled={!canAdvanceDados}
                   onClick={() => setStep('otp')}
-                  className="w-full bg-primary-container text-on-primary-container font-label-caps text-label-caps py-4 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full bg-primary-container text-on-primary-container font-label-caps text-label-caps py-4 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 h-14"
                 >
                   AVANÇAR
                   <span className="material-symbols-outlined">arrow_forward</span>
@@ -273,7 +285,7 @@ export default function AuthPage() {
             )}
 
             {step === 'otp' && (
-              <div className="w-full space-y-6 animate-fade-in-up">
+              <div className="w-full space-y-6 animate-fade-in-up min-h-[280px]">
                 <div className="space-y-2">
                   <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
                     Telefone com DDD
@@ -283,7 +295,7 @@ export default function AuthPage() {
                     placeholder="(11) 99999-9999"
                     value={phone}
                     onChange={(e) => setPhone(formatPhone(e.target.value))}
-                    className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md text-center tracking-wider"
+                    className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md text-center tracking-wider h-14"
                   />
                 </div>
 
@@ -314,7 +326,7 @@ export default function AuthPage() {
                   <button
                     type="button"
                     onClick={() => setStep('dados')}
-                    className="flex-1 border border-outline-variant text-on-surface font-label-caps text-label-caps py-4 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 border border-outline-variant text-on-surface font-label-caps text-label-caps py-4 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2 h-14"
                   >
                     <span className="material-symbols-outlined text-sm">arrow_back</span>
                     VOLTAR
@@ -323,65 +335,81 @@ export default function AuthPage() {
                     type="button"
                     disabled={!isOtpComplete}
                     onClick={() => setStep('pix')}
-                    className="flex-1 bg-primary-container text-on-primary-container font-label-caps text-label-caps py-4 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex-1 bg-primary-container text-on-primary-container font-label-caps text-label-caps py-4 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 h-14"
                   >
                     AVANÇAR
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
                   </button>
                 </div>
+
+                <p className="font-body-sm text-on-surface-variant text-center">
+                  Não recebeu?{' '}
+                  <button type="button" className="text-primary hover:underline font-semibold">
+                    Reenviar código
+                  </button>
+                </p>
               </div>
             )}
 
             {step === 'pix' && (
-              <div className="w-full space-y-6 animate-fade-in-up">
+              <div className="w-full space-y-6 animate-fade-in-up min-h-[280px]">
                 <div className="space-y-2">
                   <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
                     Tipo de Chave PIX
                   </label>
-                  <div className="grid grid-cols-2 gap-unit bg-surface-container-low p-1 rounded-2xl border border-outline-variant">
-                    {tiposPix.map((t) => (
+                  <div className="grid grid-cols-2 gap-2">
+                    {pixOptions.map((opt) => (
                       <button
-                        key={t}
+                        key={opt.type}
                         type="button"
-                        className={`font-label-caps text-label-caps py-3 rounded-xl transition-all ${
-                          tipoPix === t
-                            ? 'bg-primary-container text-on-primary-container'
-                            : 'text-on-surface-variant hover:bg-surface-container-highest'
+                        className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl transition-all min-h-[80px] ${
+                          tipoPix === opt.type
+                            ? 'bg-primary-container text-on-primary-container border-2 border-primary'
+                            : 'bg-surface-container-low text-on-surface-variant border-2 border-transparent hover:bg-surface-container-highest'
                         }`}
-                        onClick={() => setTipoPix(t)}
+                        onClick={() => setTipoPix(opt.type)}
                       >
-                        {t}
+                        <span className="material-symbols-outlined text-2xl">{opt.icon}</span>
+                        <span className="font-label-caps text-label-caps">{opt.type}</span>
                       </button>
                     ))}
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
-                    Chave PIX
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Sua chave PIX para recebimento"
-                    value={chavePix}
-                    onChange={(e) => setChavePix(e.target.value)}
-                    className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md text-center"
-                  />
-                </div>
+                {tipoPix && (
+                  <div className="space-y-2">
+                    <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                      Chave PIX
+                    </label>
+                    <input
+                      type="text"
+                      placeholder={
+                        tipoPix === 'CPF' ? 'Seu CPF' :
+                        tipoPix === 'Telefone' ? 'Seu telefone' :
+                        tipoPix === 'E-mail' ? 'Seu e-mail' :
+                        'Sua chave aleatória'
+                      }
+                      value={chavePix}
+                      onChange={(e) => setChavePix(e.target.value)}
+                      className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md text-center h-14"
+                    />
+                  </div>
+                )}
 
                 <div className="flex gap-3">
                   <button
                     type="button"
                     onClick={() => setStep('otp')}
-                    className="flex-1 border border-outline-variant text-on-surface font-label-caps text-label-caps py-4 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 border border-outline-variant text-on-surface font-label-caps text-label-caps py-4 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2 h-14"
                   >
                     <span className="material-symbols-outlined text-sm">arrow_back</span>
                     VOLTAR
                   </button>
                   <button
                     type="button"
+                    disabled={!chavePix}
                     onClick={handleVerify}
-                    className="flex-1 bg-primary-container text-on-primary-container font-label-caps text-label-caps py-4 rounded-2xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                    className="flex-1 bg-primary-container text-on-primary-container font-label-caps text-label-caps py-4 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 h-14"
                   >
                     <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>shield</span>
                     CRIAR CONTA
@@ -394,14 +422,9 @@ export default function AuthPage() {
 
         <p className="text-center font-body-sm text-body-sm text-outline max-w-xs">
           Ao continuar, você concorda com os{' '}
-          <span className="text-primary hover:underline cursor-pointer">
-            Termos de Uso
-          </span>{' '}
-          e{' '}
-          <span className="text-primary hover:underline cursor-pointer">
-            Política de Privacidade
-          </span>
-          .
+          <span className="text-primary hover:underline cursor-pointer">Termos de Uso</span>
+          {' '}e{' '}
+          <span className="text-primary hover:underline cursor-pointer">Política de Privacidade</span>.
         </p>
 
         <Link

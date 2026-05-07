@@ -5,13 +5,27 @@ import { TopAppBar } from '@/components/ui/top-app-bar'
 import { Navbar } from '@/components/ui/navbar'
 import { KpiCard } from '@/components/ui/kpi-card'
 import { DataTable } from '@/components/ui/data-table'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { mockPools } from '@/lib/mock-data'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 import type { Pool } from '@/types'
 
 type Tab = 'ativos' | 'historico'
+
+const actionCards = [
+  {
+    icon: 'playlist_add',
+    title: 'Novo Grupo',
+    desc: 'Crie e convide amigos',
+    href: '/criar-grupo',
+  },
+  {
+    icon: 'vpn_key',
+    title: 'Entrar com Código',
+    desc: 'Use um código para participar',
+    href: '#',
+  },
+]
 
 export default function DashboardPage() {
   const [tab, setTab] = useState<Tab>('ativos')
@@ -34,7 +48,7 @@ export default function DashboardPage() {
         >
           <h2 className="font-h2 text-h2 text-on-surface">Olá, João</h2>
           <p className="font-body-sm text-body-sm text-on-surface-variant">
-            Sua visão geral institucional hoje.
+            Tudo organizado, tudo seguro.
           </p>
         </section>
 
@@ -43,7 +57,7 @@ export default function DashboardPage() {
           className={`grid grid-cols-1 md:grid-cols-2 gap-gutter mb-10 transition-all duration-500 delay-100 ${kpiRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         >
           <KpiCard
-            title="VALOR EM CUSTÓDIA"
+            title="VALOR GUARDADO"
             value="1.248,50"
             accent="primary"
           />
@@ -66,17 +80,24 @@ export default function DashboardPage() {
           </KpiCard>
         </section>
 
-        <section className="flex flex-wrap gap-4 mb-12">
-          <Link href="/criar-grupo">
-            <Button>
-              <span className="material-symbols-outlined">playlist_add</span>
-              Novo Grupo
-            </Button>
-          </Link>
-          <Button variant="outline">
-            <span className="material-symbols-outlined">vpn_key</span>
-            Entrar com Código
-          </Button>
+        <section className="grid grid-cols-2 gap-4 mb-12">
+          {actionCards.map((card) => (
+            <Link
+              key={card.title}
+              href={card.href}
+              className="tonal-layer-1 p-4 rounded-2xl flex flex-col items-center justify-center text-center gap-2 hover:scale-[1.02] hover:shadow-lg transition-all duration-200 min-h-[140px]"
+            >
+              <span className="material-symbols-outlined text-primary text-4xl">
+                {card.icon}
+              </span>
+              <span className="font-label-caps text-label-caps text-on-surface">
+                {card.title}
+              </span>
+              <span className="font-body-sm text-body-sm text-on-surface-variant">
+                {card.desc}
+              </span>
+            </Link>
+          ))}
         </section>
 
         <section

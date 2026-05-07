@@ -54,7 +54,7 @@ export default function CriarGrupoPage() {
                     Nome do Grupo
                   </label>
                   <input
-                    className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md"
+                    className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md h-14"
                     placeholder="Ex: Viagem de Verão 2024"
                     type="text"
                     value={nome}
@@ -89,7 +89,7 @@ export default function CriarGrupoPage() {
                     type="button"
                     disabled={!canAdvanceStep0}
                     onClick={() => setStep(1)}
-                    className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 h-12"
                   >
                     AVANÇAR
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -140,7 +140,7 @@ export default function CriarGrupoPage() {
                         R$
                       </span>
                       <input
-                        className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 pl-12 focus:border-primary focus:ring-0 text-on-surface font-data-lg text-data-lg"
+                        className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 pl-12 focus:border-primary focus:ring-0 text-on-surface font-data-lg text-data-lg h-14"
                         type="text"
                         placeholder="0,00"
                         value={valor}
@@ -152,7 +152,7 @@ export default function CriarGrupoPage() {
                     <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
                       Integrantes
                     </label>
-                    <div className="flex items-center bg-surface-container-low border border-outline-variant rounded-2xl overflow-hidden">
+                    <div className="flex items-center bg-surface-container-low border border-outline-variant rounded-2xl overflow-hidden h-14">
                       <button
                         className="p-4 text-primary hover:bg-surface-container-highest transition-colors"
                         type="button"
@@ -161,7 +161,7 @@ export default function CriarGrupoPage() {
                         <span className="material-symbols-outlined">remove</span>
                       </button>
                       <input
-                        className="flex-grow bg-transparent border-none text-center focus:ring-0 font-data-lg text-data-lg text-on-surface"
+                        className="flex-grow bg-transparent border-none text-center focus:ring-0 font-data-lg text-data-lg text-on-surface appearance-none"
                         type="number"
                         value={integrantes}
                         onChange={(e) => setIntegrantes(Math.max(2, parseInt(e.target.value) || 2))}
@@ -182,7 +182,7 @@ export default function CriarGrupoPage() {
                   <button
                     type="button"
                     onClick={() => setStep(0)}
-                    className="border border-outline-variant text-on-surface font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center gap-2"
+                    className="border border-outline-variant text-on-surface font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center gap-2 h-12"
                   >
                     <span className="material-symbols-outlined text-sm">arrow_back</span>
                     VOLTAR
@@ -191,7 +191,7 @@ export default function CriarGrupoPage() {
                     type="button"
                     disabled={!canAdvanceStep1}
                     onClick={() => setStep(2)}
-                    className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 h-12"
                   >
                     AVANÇAR
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -206,17 +206,16 @@ export default function CriarGrupoPage() {
                   <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
                     Prazo de Encerramento
                   </label>
-                  <div className="relative group">
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline group-focus-within:text-primary">
-                      calendar_month
-                    </span>
+                  <div className="relative">
                     <input
-                      className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 text-on-surface font-data-md text-data-md"
-                      placeholder="DD / MM / AAAA"
-                      type="text"
+                      className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 pr-12 focus:border-primary focus:ring-0 text-on-surface font-data-md text-data-md h-14"
+                      type="date"
                       value={prazo}
                       onChange={(e) => setPrazo(e.target.value)}
                     />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline pointer-events-none">
+                      calendar_month
+                    </span>
                   </div>
                 </div>
 
@@ -261,7 +260,7 @@ export default function CriarGrupoPage() {
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="border border-outline-variant text-on-surface font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center gap-2"
+                    className="border border-outline-variant text-on-surface font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center gap-2 h-12"
                   >
                     <span className="material-symbols-outlined text-sm">arrow_back</span>
                     VOLTAR
@@ -269,12 +268,12 @@ export default function CriarGrupoPage() {
                   <button
                     type="submit"
                     disabled={!canAdvanceStep2}
-                    className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 h-12 whitespace-nowrap"
                   >
                     <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
                       shield_check
                     </span>
-                    CRIAR GRUPO SEGURO
+                    CRIAR GRUPO
                   </button>
                 </div>
 
