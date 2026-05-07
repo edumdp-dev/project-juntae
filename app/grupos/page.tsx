@@ -106,6 +106,14 @@ export default function GruposPage() {
           )}
         </section>
       </main>
+
+      <Link
+        href="/criar-grupo"
+        className="fixed bottom-20 right-margin z-50 w-14 h-14 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition-opacity active:scale-90 sm:hidden"
+      >
+        <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" as string }}>add</span>
+      </Link>
+
       <Navbar activeItem="pools" />
     </>
   )

@@ -36,13 +36,25 @@ export default async function SalaDoGrupoPage({ params }: Props) {
           </div>
         </section>
 
-        {/* Progress + Vacancies */}
+        {/* Progress + Prêmio Estimado */}
         <EscrowProgress
           currentAmount={pool.currentAmount}
           targetAmount={pool.targetAmount}
           percentage={pool.percentage}
           escrowNode={pool.escrowNode}
         />
+
+        <section className="md:col-span-12 lg:col-span-4 bg-surface-container p-margin rounded-2xl reveal flex flex-col justify-center">
+          <span className="font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">
+            Prêmio Estimado
+          </span>
+          <p className="font-data-lg text-h2 text-primary">
+            R$ {((pool.currentAmount * 0.9601) / pool.members.length).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+          </p>
+          <p className="font-body-sm text-on-surface-variant mt-1">
+            {pool.members.length} participantes · Taxa de 3,99% já descontada
+          </p>
+        </section>
 
         {/* Share Card */}
         <section className="md:col-span-12 lg:col-span-4 bg-surface-container p-margin flex flex-col justify-between rounded-2xl reveal">

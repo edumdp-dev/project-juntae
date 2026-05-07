@@ -23,7 +23,7 @@ const actionCards = [
     icon: 'vpn_key',
     title: 'Entrar com Código',
     desc: 'Use um código para participar',
-    href: '#',
+    href: '/entrar-codigo',
   },
 ]
 

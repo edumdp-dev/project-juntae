@@ -7,7 +7,7 @@ interface WizardStepperProps {
 
 export function WizardStepper({ steps, current }: WizardStepperProps) {
   return (
-    <div className="flex items-center justify-between mb-8 px-4">
+    <div className="flex items-center justify-between mb-8">
       {steps.map((step, idx) => {
         const isActive = idx <= current
         const isCurrent = idx === current
@@ -36,7 +36,7 @@ export function WizardStepper({ steps, current }: WizardStepperProps) {
             {idx < steps.length - 1 && (
               <div
                 className={cn(
-                  'flex-grow h-[2px] mx-4 mb-6',
+                  'flex-grow h-[2px] mx-3 mb-6',
                   idx < current ? 'bg-primary' : 'bg-outline-variant',
                 )}
               />

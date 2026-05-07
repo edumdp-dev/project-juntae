@@ -145,7 +145,7 @@ export default function AuthPage() {
             {step === 'dados' && (
               <form onSubmit={handleSendOtp} className="w-full space-y-6">
                 <div className="space-y-2">
-                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase">
                     Telefone com DDD
                   </label>
                   <input
@@ -244,9 +244,9 @@ export default function AuthPage() {
             } />
 
             {step === 'dados' && (
-              <div className="w-full space-y-6 animate-fade-in-up min-h-[280px]">
+              <div className="w-full space-y-6 animate-fade-in-up min-h-[280px] px-2">
                 <div className="space-y-2">
-                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase">
                     Nome Completo
                   </label>
                   <input
@@ -260,7 +260,7 @@ export default function AuthPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase">
                     CPF
                   </label>
                   <input
@@ -285,9 +285,9 @@ export default function AuthPage() {
             )}
 
             {step === 'otp' && (
-              <div className="w-full space-y-6 animate-fade-in-up min-h-[280px]">
+              <div className="w-full space-y-6 animate-fade-in-up min-h-[280px] px-2">
                 <div className="space-y-2">
-                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase">
                     Telefone com DDD
                   </label>
                   <input
@@ -352,9 +352,9 @@ export default function AuthPage() {
             )}
 
             {step === 'pix' && (
-              <div className="w-full space-y-6 animate-fade-in-up min-h-[280px]">
+              <div className="w-full space-y-6 animate-fade-in-up min-h-[280px] px-2">
                 <div className="space-y-2">
-                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase">
                     Tipo de Chave PIX
                   </label>
                   <div className="grid grid-cols-2 gap-2">
@@ -378,7 +378,7 @@ export default function AuthPage() {
 
                 {tipoPix && (
                   <div className="space-y-2">
-                    <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                    <label className="font-label-caps text-label-caps text-on-surface-variant uppercase">
                       Chave PIX
                     </label>
                     <input

@@ -12,6 +12,19 @@ const steps = [
   { label: 'Prazos' },
 ]
 
+function formatCurrency(v: string) {
+  const digits = v.replace(/\D/g, '')
+  if (!digits) return ''
+  const value = parseInt(digits, 10) / 100
+  return value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+}
+
+function formatDateBR(iso: string) {
+  if (!iso) return '—'
+  const [y, m, d] = iso.split('-')
+  return `${d}/${m}/${y}`
+}
+
 export default function CriarGrupoPage() {
   const [step, setStep] = useState(0)
   const [nome, setNome] = useState('')
@@ -28,7 +41,7 @@ export default function CriarGrupoPage() {
   }
 
   const canAdvanceStep0 = nome.trim().length >= 3
-  const canAdvanceStep1 = valor.length > 0
+  const canAdvanceStep1 = valor.replace(/\D/g, '').length >= 3
   const canAdvanceStep2 = prazo.length >= 8
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -50,7 +63,7 @@ export default function CriarGrupoPage() {
             {step === 0 && (
               <section className="space-y-6 animate-fade-in-up">
                 <div className="space-y-2">
-                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase">
                     Nome do Grupo
                   </label>
                   <input
@@ -101,7 +114,7 @@ export default function CriarGrupoPage() {
             {step === 1 && (
               <section className="space-y-6 animate-fade-in-up">
                 <div className="space-y-4">
-                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase">
                     Modelo de Arrecadação
                   </label>
                   <div className="grid grid-cols-2 gap-unit bg-surface-container-low p-1 rounded-2xl border border-outline-variant">
@@ -114,7 +127,7 @@ export default function CriarGrupoPage() {
                       type="button"
                       onClick={() => setModelo('total')}
                     >
-                      VALOR TOTAL
+                      Total
                     </button>
                     <button
                       className={`font-label-caps text-label-caps py-3 rounded-xl transition-all ${
@@ -125,14 +138,14 @@ export default function CriarGrupoPage() {
                       type="button"
                       onClick={() => setModelo('por-integrante')}
                     >
-                      POR INTEGRANTE
+                      p/ pessoa
                     </button>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                    <label className="font-label-caps text-label-caps text-on-surface-variant uppercase">
                       Valor do Objetivo
                     </label>
                     <div className="relative">
@@ -142,14 +155,15 @@ export default function CriarGrupoPage() {
                       <input
                         className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 pl-12 focus:border-primary focus:ring-0 text-on-surface font-data-lg text-data-lg h-14"
                         type="text"
+                        inputMode="numeric"
                         placeholder="0,00"
                         value={valor}
-                        onChange={(e) => setValor(e.target.value)}
+                        onChange={(e) => setValor(formatCurrency(e.target.value))}
                       />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                    <label className="font-label-caps text-label-caps text-on-surface-variant uppercase">
                       Integrantes
                     </label>
                     <div className="flex items-center bg-surface-container-low border border-outline-variant rounded-2xl overflow-hidden h-14">
@@ -203,7 +217,7 @@ export default function CriarGrupoPage() {
             {step === 2 && (
               <section className="space-y-6 animate-fade-in-up">
                 <div className="space-y-2">
-                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
+                  <label className="font-label-caps text-label-caps text-on-surface-variant uppercase">
                     Prazo de Encerramento
                   </label>
                   <div className="relative">
@@ -227,11 +241,11 @@ export default function CriarGrupoPage() {
                   </div>
                   <div className="flex justify-between text-body-sm">
                     <span className="text-on-surface-variant">Modelo:</span>
-                    <span className="text-on-surface font-semibold">{modelo === 'total' ? 'Valor Total' : 'Por Integrante'}</span>
+                    <span className="text-on-surface font-semibold">{modelo === 'total' ? 'Total' : 'p/ pessoa'}</span>
                   </div>
                   <div className="flex justify-between text-body-sm">
                     <span className="text-on-surface-variant">Valor:</span>
-                    <span className="text-on-surface font-semibold">R$ {valor || '0'}</span>
+                    <span className="text-on-surface font-semibold">R$ {valor || '0,00'}</span>
                   </div>
                   <div className="flex justify-between text-body-sm">
                     <span className="text-on-surface-variant">Integrantes:</span>
@@ -239,7 +253,7 @@ export default function CriarGrupoPage() {
                   </div>
                   <div className="flex justify-between text-body-sm">
                     <span className="text-on-surface-variant">Prazo:</span>
-                    <span className="text-on-surface font-semibold">{prazo || '—'}</span>
+                    <span className="text-on-surface font-semibold">{formatDateBR(prazo)}</span>
                   </div>
                 </div>
 
@@ -270,9 +284,7 @@ export default function CriarGrupoPage() {
                     disabled={!canAdvanceStep2}
                     className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 h-12 whitespace-nowrap"
                   >
-                    <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      shield_check
-                    </span>
+                    <span className="material-symbols-outlined">check</span>
                     CRIAR GRUPO
                   </button>
                 </div>
