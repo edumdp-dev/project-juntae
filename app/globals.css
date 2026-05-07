@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@theme {
+  --color-on-primary-fixed-variant: #0040a2;
+  --color-surface-container-lowest: #0c0e15;
+  --color-on-surface: #e1e2ec;
+  --color-on-error: #690005;
+  --color-background: #11131a;
+  --color-tertiary-fixed: #ffdbcf;
+  --color-on-primary-container: #c4d2ff;
+  --color-on-primary: #002b73;
+  --color-inverse-on-surface: #2e3038;
+  --color-surface: #11131a;
+  --color-on-error-container: #ffdad6;
+  --color-primary-fixed-dim: #b2c5ff;
+  --color-inverse-primary: #0c56d0;
+  --color-primary-container: #0052cc;
+  --color-secondary-fixed: #dae2ff;
+  --color-tertiary-fixed-dim: #ffb59b;
+  --color-tertiary: #ffb59b;
+  --color-tertiary-container: #a33500;
+  --color-primary: #b2c5ff;
+  --color-surface-container-low: #191b23;
+  --color-on-secondary-container: #acb8db;
+  --color-on-tertiary: #5b1a00;
+  --color-error-container: #93000a;
+  --color-inverse-surface: #e1e2ec;
+  --color-on-tertiary-container: #ffc6b2;
+  --color-on-secondary-fixed-variant: #3b4664;
+  --color-secondary-container: #3d4867;
+  --color-surface-dim: #11131a;
+  --color-on-secondary: #24304d;
+  --color-on-primary-fixed: #001848;
+  --color-primary-fixed: #dae2ff;
+  --color-secondary-fixed-dim: #bac6ea;
+  --color-surface-container-highest: #32343c;
+  --color-on-secondary-fixed: #0e1a36;
+  --color-surface-tint: #b2c5ff;
+  --color-secondary: #bac6ea;
+  --color-surface-container-high: #282a31;
+  --color-on-surface-variant: #c3c6d6;
+  --color-surface-container: #1d1f27;
+  --color-surface-bright: #373941;
+  --color-error: #ffb4ab;
+  --color-outline-variant: #434654;
+  --color-surface-variant: #32343c;
+  --color-on-tertiary-fixed: #380d00;
+  --color-on-tertiary-fixed-variant: #812800;
+  --color-outline: #8d90a0;
+  --color-on-background: #e1e2ec;
+
+  --font-data-lg: "JetBrains Mono", monospace;
+  --font-label-caps: "Inter", sans-serif;
+  --font-h2: "Inter", sans-serif;
+  --font-body-sm: "Inter", sans-serif;
+  --font-h1: "Inter", sans-serif;
+  --font-body-md: "Inter", sans-serif;
+  --font-data-md: "JetBrains Mono", monospace;
+
+  --font-size-data-lg: 18px;
+  --font-size-label-caps: 12px;
+  --font-size-h2: 24px;
+  --font-size-body-sm: 14px;
+  --font-size-h1: 32px;
+  --font-size-body-md: 16px;
+  --font-size-data-md: 14px;
+
+  --radius-default: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-2xl: 1rem;
+  --radius-full: 0.75rem;
+
+  --spacing-gutter: 16px;
+  --spacing-margin: 24px;
+  --spacing-unit: 4px;
+  --spacing-container-max: 1440px;
+}
+
+@utility tonal-layer-1 {
+  background-color: #1d1f27;
+}
+
+@utility tonal-layer-2 {
+  background-color: #282a31;
+}
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+@utility revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out both;
+}
+
+.animate-slide-in {
+  animation: slide-in-left 0.3s ease-out both;
+}
+
+.animate-slide-out {
+  animation: slide-out-left 0.3s ease-in both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out both;
+}
+
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+body {
+  background-color: #11131a;
+  color: #e1e2ec;
+  font-family: "Inter", sans-serif;
+  min-height: max(884px, 100dvh);
+}
