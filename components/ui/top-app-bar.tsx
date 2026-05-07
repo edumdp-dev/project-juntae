@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import type { AppBarVariant } from '@/types'
 
@@ -27,13 +28,13 @@ export function TopAppBar({ variant = 'full' }: TopAppBarProps) {
           </button>
           <img src="/logo.png" alt="JUNTAE" className="h-8" />
         </div>
-        <div className="w-10 h-10 rounded-full overflow-hidden border border-outline-variant bg-surface-container-highest">
+        <Link href="/perfil" className="w-10 h-10 rounded-full overflow-hidden border border-outline-variant bg-surface-container-highest">
           <img
             alt="User Profile"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo8cMr954gqN2a-Mks3tEed6tL2RhRvU746guunVjQAZwSeec_-j0fq6fp8jgwCecAAAubrSMbgd9XAcyhpbfzCI4bYF8u9I1YVEs6-bO4JZ5t-6jkNDorSIbkvXUX5jqXiJdM5QqKn5CdZ1i2aF3zsJZHilnKxn03Tsk3hoCP65e2ziyZkAn-2i3F-B9gi3ezxBgij_YFbTz9C0efhDTcH0N7ODvtiQu8_slMmA8PQ-MAkKAcLHsO9o_wSb9DY6xCTTjHcVeYezTA"
             className="w-full h-full object-cover"
           />
-        </div>
+        </Link>
       </div>
     </header>
   )
