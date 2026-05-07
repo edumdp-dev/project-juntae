@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { TopAppBar } from '@/components/ui/top-app-bar'
 import { Navbar } from '@/components/ui/navbar'
 import { WizardStepper } from '@/components/ui/wizard-stepper'
@@ -34,6 +34,7 @@ export default function CriarGrupoPage() {
   const [prazo, setPrazo] = useState('')
   const [toastVisible, setToastVisible] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
+  const dateInputRef = useRef<HTMLInputElement>(null)
 
   const showToast = (msg: string) => {
     setToastMessage(msg)
@@ -222,11 +223,22 @@ export default function CriarGrupoPage() {
                   </label>
                   <div className="relative">
                     <input
-                      className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 pr-12 focus:border-primary focus:ring-0 text-on-surface font-data-md text-data-md h-14"
+                      ref={dateInputRef}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       type="date"
                       value={prazo}
                       onChange={(e) => setPrazo(e.target.value)}
                     />
+                    <div
+                      onClick={() => dateInputRef.current?.showPicker()}
+                      className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 pr-12 focus:border-primary text-on-surface font-data-md text-data-md h-14 flex items-center cursor-pointer"
+                    >
+                      <span className={prazo ? 'text-on-surface' : 'text-outline/50'}>
+                        {prazo
+                          ? new Date(prazo + 'T12:00:00').toLocaleDateString('pt-BR')
+                          : 'DD / MM / AAAA'}
+                      </span>
+                    </div>
                     <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline pointer-events-none">
                       calendar_month
                     </span>

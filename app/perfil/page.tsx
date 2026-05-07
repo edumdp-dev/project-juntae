@@ -58,7 +58,7 @@ export default function PerfilPage() {
           <div className="tonal-layer-1 p-4 rounded-2xl text-center hover:scale-[1.02] transition-all duration-200">
             <span className="font-data-lg text-data-lg text-primary">R$ 1.248,50</span>
             <p className="font-label-caps text-label-caps text-on-surface-variant mt-1">
-              GUARDADO
+              SALDO
             </p>
           </div>
           <div className="tonal-layer-1 p-4 rounded-2xl text-center hover:scale-[1.02] transition-all duration-200">

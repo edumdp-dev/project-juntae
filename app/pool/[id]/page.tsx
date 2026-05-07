@@ -207,7 +207,25 @@ export default async function SalaDoGrupoPage({ params }: Props) {
               </span>
             </div>
           </div>
-          <div className="overflow-x-auto">
+          <div className="sm:hidden space-y-3 px-margin pb-margin">
+            {pool.members.map((member) => (
+              <div
+                key={member.id}
+                className="bg-surface-container-low p-3 rounded-xl flex items-center gap-3"
+              >
+                <img className="w-10 h-10 rounded-full border border-outline-variant" src={member.avatar} alt={member.name} />
+                <div className="flex-1 min-w-0">
+                  <p className="font-body-md text-on-surface truncate text-sm">{member.name}</p>
+                  <p className="font-label-caps text-[10px] text-on-surface-variant">{member.cpf}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-data-md text-data-md text-on-surface">R$ {member.contribution.toFixed(2)}</p>
+                  <div className="mt-1"><StatusBadge status={member.status} size="sm" /></div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="hidden sm:block overflow-x-auto">
             <table className="w-full text-left border-collapse min-w-[500px]">
               <thead>
                 <tr className="border-b border-outline-variant">
@@ -224,11 +242,7 @@ export default async function SalaDoGrupoPage({ params }: Props) {
                     className="border-b border-outline-variant/30 hover:bg-surface-container-high transition-colors"
                   >
                     <td className="px-margin py-4 flex items-center gap-3">
-                      <img
-                        className="w-8 h-8 rounded-full border border-outline-variant"
-                        src={member.avatar}
-                        alt={member.name}
-                      />
+                      <img className="w-8 h-8 rounded-full border border-outline-variant" src={member.avatar} alt={member.name} />
                       <span className="text-on-surface">{member.name}</span>
                     </td>
                     <td className="px-margin py-4 text-on-surface-variant">{member.cpf}</td>
