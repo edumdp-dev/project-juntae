@@ -3,10 +3,8 @@
 import { useState } from 'react'
 import { TopAppBar } from '@/components/ui/top-app-bar'
 import { Navbar } from '@/components/ui/navbar'
-import { StatusBadge } from '@/components/ui/status-badge'
 import { Toast } from '@/components/ui/toast'
 import { ConfirmModal } from '@/components/ui/confirm-modal'
-import Link from 'next/link'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 
 export default function PerfilPage() {
@@ -38,8 +36,8 @@ export default function PerfilPage() {
           </div>
           <div className="text-center">
             <h2 className="font-h2 text-h2 text-on-surface">João Silva</h2>
-            <p className="font-data-md text-data-md text-on-surface-variant">
-              ***.456.789-**
+            <p className="font-body-sm text-body-sm text-on-surface-variant">
+              joao.silva@email.com
             </p>
           </div>
           <span className="bg-primary/10 text-primary px-3 py-1 font-label-caps text-label-caps rounded-full">
@@ -58,15 +56,15 @@ export default function PerfilPage() {
             </p>
           </div>
           <div className="tonal-layer-1 p-4 rounded-2xl text-center hover:scale-[1.02] transition-all duration-200">
-            <span className="font-data-lg text-data-lg text-primary">R$ 1.248</span>
+            <span className="font-data-lg text-data-lg text-primary">R$ 1.248,50</span>
             <p className="font-label-caps text-label-caps text-on-surface-variant mt-1">
-              CUSTODIADO
+              GUARDADO
             </p>
           </div>
           <div className="tonal-layer-1 p-4 rounded-2xl text-center hover:scale-[1.02] transition-all duration-200">
             <span className="font-data-lg text-data-lg text-primary">100%</span>
             <p className="font-label-caps text-label-caps text-on-surface-variant mt-1">
-              CONFORMIDADE
+              EM DIA
             </p>
           </div>
         </section>
@@ -89,7 +87,6 @@ export default function PerfilPage() {
                   </p>
                   <p className="font-body-md text-on-surface mt-1">João Silva</p>
                 </div>
-                <span className="material-symbols-outlined text-outline">chevron_right</span>
               </div>
               <div className="flex justify-between items-center p-margin hover:bg-surface-container-high transition-colors">
                 <div>
@@ -97,19 +94,17 @@ export default function PerfilPage() {
                     CPF
                   </p>
                   <p className="font-data-md text-data-md text-on-surface mt-1">
-                    ***.456.789-**
+                    123.456.789-00
                   </p>
                 </div>
-                <span className="material-symbols-outlined text-outline">chevron_right</span>
               </div>
               <div className="flex justify-between items-center p-margin hover:bg-surface-container-high transition-colors">
                 <div>
                   <p className="font-label-caps text-label-caps text-on-surface-variant">
                     TELEFONE
                   </p>
-                  <p className="font-body-md text-on-surface mt-1">(11) 9****-9999</p>
+                  <p className="font-body-md text-on-surface mt-1">(11) 91234-5678</p>
                 </div>
-                <span className="material-symbols-outlined text-outline">chevron_right</span>
               </div>
             </div>
           </div>
