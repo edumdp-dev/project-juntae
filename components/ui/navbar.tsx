@@ -9,10 +9,10 @@ interface NavbarProps {
 }
 
 const items: { icon: string; label: string; href: string; id: NavItem }[] = [
-  { icon: 'dashboard', label: 'Summary', href: '/dashboard', id: 'summary' },
-  { icon: 'account_balance_wallet', label: 'Pools', href: '/pools', id: 'pools' },
-  { icon: 'add_box', label: 'Create', href: '/criar-grupo', id: 'create' },
-  { icon: 'receipt_long', label: 'Ledger', href: '/ledger', id: 'ledger' },
+  { icon: 'space_dashboard', label: 'Resumo', href: '/dashboard', id: 'summary' },
+  { icon: 'savings', label: 'Grupos', href: '/grupos', id: 'pools' },
+  { icon: 'playlist_add', label: 'Criar', href: '/criar-grupo', id: 'create' },
+  { icon: 'receipt', label: 'Extrato', href: '/extrato', id: 'ledger' },
 ]
 
 export function Navbar({ activeItem }: NavbarProps) {

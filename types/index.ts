@@ -1,5 +1,5 @@
-export type PoolStatus = 'ativo' | 'aguardando'
-export type PaymentStatus = 'liquidado' | 'aguardando'
+export type PoolStatus = 'ativo' | 'aguardando' | 'encerrado'
+export type PaymentStatus = 'pago' | 'pendente'
 export type NavItem = 'summary' | 'pools' | 'create' | 'ledger'
 export type AppBarVariant = 'full' | 'centered'
 
@@ -10,15 +10,26 @@ export interface Pool {
   status: PoolStatus
   participants: { current: number; max: number }
   totalValue: number
+  category?: string
 }
 
 export interface Member {
   id: string
   name: string
   avatar: string
-  wallet: string
+  cpf: string
   contribution: number
   status: PaymentStatus
+}
+
+export interface Transaction {
+  id: string
+  date: string
+  description: string
+  amount: number
+  type: 'entrada' | 'saida'
+  status: 'confirmado' | 'pendente'
+  poolName?: string
 }
 
 export interface PoolDetail {

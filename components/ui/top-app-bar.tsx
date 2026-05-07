@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { cn } from '@/lib/utils'
+import { useSidebar } from '@/lib/sidebar-context'
 import type { AppBarVariant } from '@/types'
 
 interface TopAppBarProps {
@@ -9,11 +9,15 @@ interface TopAppBarProps {
 }
 
 export function TopAppBar({ variant = 'full' }: TopAppBarProps) {
+  const { toggle } = useSidebar()
+
   if (variant === 'centered') {
     return (
       <header className="bg-surface border-b border-outline-variant fixed top-0 z-50 w-full">
         <div className="flex justify-center items-center w-full px-margin h-16 max-w-container-max mx-auto">
-          <img src="/logo.png" alt="JUNTAE" className="h-8" />
+          <Link href="/dashboard">
+            <img src="/shield.png" alt="JUNTAE" className="h-8" />
+          </Link>
         </div>
       </header>
     )
@@ -22,12 +26,15 @@ export function TopAppBar({ variant = 'full' }: TopAppBarProps) {
   return (
     <header className="bg-surface border-b border-outline-variant fixed top-0 z-50 w-full">
       <div className="flex justify-between items-center w-full px-margin h-16 max-w-container-max mx-auto">
-        <div className="flex items-center gap-4">
-          <button className="text-primary hover:bg-surface-container-high transition-colors p-2 rounded-xl">
-            <span className="material-symbols-outlined">menu</span>
-          </button>
-          <img src="/logo.png" alt="JUNTAE" className="h-8" />
-        </div>
+        <button
+          onClick={toggle}
+          className="text-primary hover:bg-surface-container-high transition-colors p-2 rounded-xl"
+        >
+          <span className="material-symbols-outlined">menu</span>
+        </button>
+        <Link href="/dashboard" className="absolute left-1/2 -translate-x-1/2">
+          <img src="/shield.png" alt="JUNTAE" className="h-8" />
+        </Link>
         <Link href="/perfil" className="w-10 h-10 rounded-full overflow-hidden border border-outline-variant bg-surface-container-highest">
           <img
             alt="User Profile"

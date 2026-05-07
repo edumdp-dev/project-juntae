@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { TopAppBar } from '@/components/ui/top-app-bar'
 import { Navbar } from '@/components/ui/navbar'
 import { WizardStepper } from '@/components/ui/wizard-stepper'
+import { Toast } from '@/components/ui/toast'
 
 const steps = [
   { label: 'Identidade' },
@@ -12,32 +13,59 @@ const steps = [
 ]
 
 export default function CriarGrupoPage() {
-  const [step] = useState(0)
+  const [step, setStep] = useState(0)
+  const [nome, setNome] = useState('')
+  const [modelo, setModelo] = useState<'total' | 'por-integrante'>('total')
+  const [valor, setValor] = useState('')
+  const [integrantes, setIntegrantes] = useState(2)
+  const [prazo, setPrazo] = useState('')
+  const [toastVisible, setToastVisible] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg)
+    setToastVisible(true)
+  }
+
+  const canAdvanceStep0 = nome.trim().length >= 3
+  const canAdvanceStep1 = valor.length > 0
+  const canAdvanceStep2 = prazo.length >= 8
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    showToast('Grupo criado com sucesso!')
+    setTimeout(() => {
+      window.location.href = `/pool/8829-X`
+    }, 1500)
+  }
 
   return (
     <>
       <TopAppBar variant="centered" />
-      <main className="flex-grow flex items-start justify-center pt-24 pb-24 px-gutter">
+      <main className="flex-grow flex items-start justify-center pt-24 pb-28 px-gutter">
         <div className="w-full max-w-2xl">
           <WizardStepper steps={steps} current={step} />
 
-          <div className="bg-surface-container border-t-4 border-primary p-margin rounded-2xl shadow-sm">
-            <form className="space-y-8">
-              <section className="space-y-6">
+          <form onSubmit={handleSubmit} className="bg-surface-container border-t-4 border-primary p-margin rounded-2xl shadow-sm">
+            {step === 0 && (
+              <section className="space-y-6 animate-fade-in-up">
                 <div className="space-y-2">
                   <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
-                    Identificação da Pool
+                    Nome do Grupo
                   </label>
                   <input
                     className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 transition-colors text-on-surface placeholder:text-outline/50 font-body-md"
                     placeholder="Ex: Viagem de Verão 2024"
                     type="text"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                    autoFocus
                   />
                 </div>
 
                 <div className="flex items-center gap-6 p-4 bg-surface-container-lowest border border-outline-variant rounded-2xl">
                   <div className="relative w-20 h-20 bg-surface-container-highest rounded-xl flex items-center justify-center border-2 border-dashed border-outline overflow-hidden">
-                    <span className="material-symbols-outlined text-outline">add_a_photo</span>
+                    <span className="material-symbols-outlined text-outline">add_photo_alternate</span>
                   </div>
                   <div className="space-y-1">
                     <h3 className="font-label-caps text-label-caps text-on-surface">
@@ -47,30 +75,55 @@ export default function CriarGrupoPage() {
                       JPG, PNG até 5MB. Formato 1:1 recomendado.
                     </p>
                     <button
-                      className="text-primary font-label-caps text-label-caps hover:underline mt-2"
+                      className="text-primary font-label-caps text-label-caps hover:underline mt-2 flex items-center gap-1"
                       type="button"
                     >
+                      <span className="material-symbols-outlined text-sm">upload_file</span>
                       UPLOAD ARQUIVO
                     </button>
                   </div>
                 </div>
-              </section>
 
-              <section className="space-y-6">
+                <div className="flex justify-end pt-4">
+                  <button
+                    type="button"
+                    disabled={!canAdvanceStep0}
+                    onClick={() => setStep(1)}
+                    className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    AVANÇAR
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
+                </div>
+              </section>
+            )}
+
+            {step === 1 && (
+              <section className="space-y-6 animate-fade-in-up">
                 <div className="space-y-4">
                   <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
                     Modelo de Arrecadação
                   </label>
                   <div className="grid grid-cols-2 gap-unit bg-surface-container-low p-1 rounded-2xl border border-outline-variant">
                     <button
-                      className="bg-primary-container text-on-primary-container font-label-caps text-label-caps py-3 rounded-xl transition-all"
+                      className={`font-label-caps text-label-caps py-3 rounded-xl transition-all ${
+                        modelo === 'total'
+                          ? 'bg-primary-container text-on-primary-container'
+                          : 'text-on-surface-variant hover:bg-surface-container-highest'
+                      }`}
                       type="button"
+                      onClick={() => setModelo('total')}
                     >
                       VALOR TOTAL
                     </button>
                     <button
-                      className="text-on-surface-variant font-label-caps text-label-caps py-3 rounded-xl hover:bg-surface-container-highest transition-all"
+                      className={`font-label-caps text-label-caps py-3 rounded-xl transition-all ${
+                        modelo === 'por-integrante'
+                          ? 'bg-primary-container text-on-primary-container'
+                          : 'text-on-surface-variant hover:bg-surface-container-highest'
+                      }`}
                       type="button"
+                      onClick={() => setModelo('por-integrante')}
                     >
                       POR INTEGRANTE
                     </button>
@@ -89,7 +142,9 @@ export default function CriarGrupoPage() {
                       <input
                         className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 pl-12 focus:border-primary focus:ring-0 text-on-surface font-data-lg text-data-lg"
                         type="text"
-                        defaultValue="0,00"
+                        placeholder="0,00"
+                        value={valor}
+                        onChange={(e) => setValor(e.target.value)}
                       />
                     </div>
                   </div>
@@ -98,23 +153,55 @@ export default function CriarGrupoPage() {
                       Integrantes
                     </label>
                     <div className="flex items-center bg-surface-container-low border border-outline-variant rounded-2xl overflow-hidden">
-                      <button className="p-4 text-primary hover:bg-surface-container-highest" type="button">
+                      <button
+                        className="p-4 text-primary hover:bg-surface-container-highest transition-colors"
+                        type="button"
+                        onClick={() => setIntegrantes(Math.max(2, integrantes - 1))}
+                      >
                         <span className="material-symbols-outlined">remove</span>
                       </button>
                       <input
                         className="flex-grow bg-transparent border-none text-center focus:ring-0 font-data-lg text-data-lg text-on-surface"
                         type="number"
-                        defaultValue={1}
+                        value={integrantes}
+                        onChange={(e) => setIntegrantes(Math.max(2, parseInt(e.target.value) || 2))}
+                        min={2}
                       />
-                      <button className="p-4 text-primary hover:bg-surface-container-highest" type="button">
+                      <button
+                        className="p-4 text-primary hover:bg-surface-container-highest transition-colors"
+                        type="button"
+                        onClick={() => setIntegrantes(integrantes + 1)}
+                      >
                         <span className="material-symbols-outlined">add</span>
                       </button>
                     </div>
                   </div>
                 </div>
-              </section>
 
-              <section className="space-y-6">
+                <div className="flex justify-between pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setStep(0)}
+                    className="border border-outline-variant text-on-surface font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center gap-2"
+                  >
+                    <span className="material-symbols-outlined text-sm">arrow_back</span>
+                    VOLTAR
+                  </button>
+                  <button
+                    type="button"
+                    disabled={!canAdvanceStep1}
+                    onClick={() => setStep(2)}
+                    className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    AVANÇAR
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
+                </div>
+              </section>
+            )}
+
+            {step === 2 && (
+              <section className="space-y-6 animate-fade-in-up">
                 <div className="space-y-2">
                   <label className="font-label-caps text-label-caps text-on-surface-variant uppercase ml-2">
                     Prazo de Encerramento
@@ -127,47 +214,89 @@ export default function CriarGrupoPage() {
                       className="w-full bg-surface-container-low border border-outline-variant rounded-2xl p-4 focus:border-primary focus:ring-0 text-on-surface font-data-md text-data-md"
                       placeholder="DD / MM / AAAA"
                       type="text"
+                      value={prazo}
+                      onChange={(e) => setPrazo(e.target.value)}
                     />
                   </div>
                 </div>
-              </section>
 
-              <div className="bg-primary-container/10 border border-primary/20 p-4 rounded-2xl flex gap-4 items-start">
-                <span className="material-symbols-outlined text-primary">verified_user</span>
-                <div className="space-y-1">
-                  <p className="font-label-caps text-label-caps text-primary uppercase">
-                    Custódia Segura
-                  </p>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Os valores arrecadados são mantidos em uma conta escrow isolada sob regras
-                    de liquidação programadas.
-                  </p>
+                <div className="bg-surface-container-low p-4 rounded-2xl space-y-2">
+                  <h3 className="font-label-caps text-label-caps text-primary uppercase">Resumo</h3>
+                  <div className="flex justify-between text-body-sm">
+                    <span className="text-on-surface-variant">Grupo:</span>
+                    <span className="text-on-surface font-semibold">{nome || '—'}</span>
+                  </div>
+                  <div className="flex justify-between text-body-sm">
+                    <span className="text-on-surface-variant">Modelo:</span>
+                    <span className="text-on-surface font-semibold">{modelo === 'total' ? 'Valor Total' : 'Por Integrante'}</span>
+                  </div>
+                  <div className="flex justify-between text-body-sm">
+                    <span className="text-on-surface-variant">Valor:</span>
+                    <span className="text-on-surface font-semibold">R$ {valor || '0'}</span>
+                  </div>
+                  <div className="flex justify-between text-body-sm">
+                    <span className="text-on-surface-variant">Integrantes:</span>
+                    <span className="text-on-surface font-semibold">{integrantes}</span>
+                  </div>
+                  <div className="flex justify-between text-body-sm">
+                    <span className="text-on-surface-variant">Prazo:</span>
+                    <span className="text-on-surface font-semibold">{prazo || '—'}</span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex flex-col gap-4 pt-4">
-                <button
-                  className="w-full bg-primary-container text-on-primary-container font-h2 text-h2 py-4 rounded-2xl hover:opacity-90 transition-opacity flex items-center justify-center gap-3 shadow-lg"
-                  type="submit"
-                >
-                  <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
-                    security
-                  </span>
-                  CRIAR GRUPO SEGURO
-                </button>
-                <p className="text-center font-body-sm text-body-sm text-outline">
-                  Ao prosseguir, você concorda com as{' '}
+                <div className="bg-primary-container/10 border border-primary/20 p-4 rounded-2xl flex gap-4 items-start">
+                  <span className="material-symbols-outlined text-primary">shield</span>
+                  <div className="space-y-1">
+                    <p className="font-label-caps text-label-caps text-primary uppercase">
+                      Custódia Protegida
+                    </p>
+                    <p className="font-body-sm text-body-sm text-on-surface-variant">
+                      Os valores arrecadados são mantidos em uma conta escrow isolada sob regras
+                      de liquidação programadas.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex justify-between pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setStep(1)}
+                    className="border border-outline-variant text-on-surface font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:bg-surface-container-high transition-colors flex items-center gap-2"
+                  >
+                    <span className="material-symbols-outlined text-sm">arrow_back</span>
+                    VOLTAR
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={!canAdvanceStep2}
+                    className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-8 py-3 rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
+                      shield_check
+                    </span>
+                    CRIAR GRUPO SEGURO
+                  </button>
+                </div>
+
+                <p className="text-center font-body-sm text-body-sm text-outline pt-2">
+                  Ao prosseguir, você concorda com os{' '}
                   <span className="text-primary hover:underline cursor-pointer">
-                    Normas de Compliance
+                    Termos de Custódia
                   </span>{' '}
                   da rede.
                 </p>
-              </div>
-            </form>
-          </div>
+              </section>
+            )}
+          </form>
         </div>
       </main>
       <Navbar activeItem="create" />
+
+      <Toast
+        message={toastMessage}
+        visible={toastVisible}
+        onClose={() => setToastVisible(false)}
+      />
     </>
   )
 }

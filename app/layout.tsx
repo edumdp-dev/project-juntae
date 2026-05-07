@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
+import { SidebarProvider } from '@/lib/sidebar-context'
+import { Sidebar } from '@/components/ui/sidebar'
 import './globals.css'
 
 const inter = Inter({
@@ -31,7 +33,10 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
-        {children}
+        <SidebarProvider>
+          <Sidebar />
+          {children}
+        </SidebarProvider>
       </body>
     </html>
   )

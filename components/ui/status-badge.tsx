@@ -12,9 +12,17 @@ const config: Record<BadgeStatus, { label: string; styles: string }> = {
     label: 'AGUARDANDO',
     styles: 'bg-tertiary/10 text-tertiary border border-tertiary/20',
   },
-  liquidado: {
-    label: 'Liquidado',
+  encerrado: {
+    label: 'ENCERRADO',
+    styles: 'bg-surface-container-low text-on-surface-variant border border-outline-variant',
+  },
+  pago: {
+    label: 'PAGO',
     styles: 'bg-primary/10 text-primary border border-primary/20',
+  },
+  pendente: {
+    label: 'PENDENTE',
+    styles: 'bg-tertiary/10 text-tertiary border border-tertiary/20',
   },
 }
 
